@@ -14,6 +14,7 @@ return {
     opts = { latex = { enabled = false } },
   },
 
+
   -- ── nvim-tree ─────────────────────────────────────────────────────────
   {
     "nvim-tree/nvim-tree.lua",

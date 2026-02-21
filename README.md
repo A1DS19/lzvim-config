@@ -57,15 +57,7 @@ mv ~/.cache/nvim{,.bak}
 git clone https://github.com/<your-username>/lzvim-config ~/.config/nvim
 ```
 
-### 3. Set the Anthropic API key (for AI features)
-
-```sh
-export ANTHROPIC_API_KEY="sk-ant-..."
-```
-
-Add that line to your `~/.zshrc` or `~/.bashrc` to make it permanent.
-
-### 4. Launch Neovim
+### 3. Launch Neovim
 
 ```sh
 nvim
@@ -161,7 +153,6 @@ These are cosmetic — Neorg skips conflicting keys automatically. If you want N
 | **conform.nvim** | Async formatter (replaces none-ls) |
 | **nvim-lint** | Async linter (replaces none-ls diagnostics) |
 | **LuaSnip** | Snippet engine + friendly-snippets + user snippets |
-| **codecompanion.nvim** | AI chat + inline assist (Anthropic Claude) |
 | **nvim-tree** | Sidebar file explorer (auto-opens on launch) |
 | **oil.nvim** | Edit the filesystem like a buffer |
 | **fzf-lua** | Fuzzy finder (faster than Telescope) |
@@ -186,14 +177,6 @@ These are cosmetic — Neorg skips conflicting keys automatically. If you want N
 | `<leader>fb` | Buffers (fzf-lua) |
 | `<leader>fh` | Help tags (fzf-lua) |
 | `<leader>fgf` | Live grep in current file |
-
-#### AI (CodeCompanion)
-
-| Key | Action |
-|---|---|
-| `<leader>aa` | AI action palette (explain, refactor, fix, …) |
-| `<leader>ac` | Toggle AI chat sidebar |
-| `<leader>ai` | Inline AI completion / act on visual selection |
 
 #### Git
 
@@ -249,8 +232,6 @@ All other key bindings follow the [LazyVim defaults](https://www.lazyvim.org/key
 | `:MasonUpdate` | Update all Mason-managed tools |
 | `:LazyGit` | Open LazyGit TUI |
 | `:Oil` | Open current directory as a buffer |
-| `:CodeCompanionChat` | Open AI chat |
-| `:CodeCompanionActions` | Open AI action palette |
 | `:CMakeGenerate` | Generate CMake build files |
 | `:CMakeBuild` | Build the CMake project |
 | `:Neotest run` | Run nearest test |
@@ -265,7 +246,6 @@ All other key bindings follow the [LazyVim defaults](https://www.lazyvim.org/key
 - [LazyVim extras](https://www.lazyvim.org/extras)
 - [blink.cmp](https://github.com/Saghen/blink.cmp)
 - [conform.nvim](https://github.com/stevearc/conform.nvim)
-- [codecompanion.nvim](https://github.com/olimorris/codecompanion.nvim)
 - [oil.nvim](https://github.com/stevearc/oil.nvim)
 - [fzf-lua](https://github.com/ibhagwan/fzf-lua)
 - [neotest](https://github.com/nvim-neotest/neotest)
