@@ -6,8 +6,11 @@ vim.opt.wrap = true
 vim.opt.cmdheight = 2
 vim.opt.guifont = "JetBrainsMono Nerd Font:h17"
 
--- Cursor colours (Dracula palette)
-vim.api.nvim_set_hl(0, "Cursor",  { fg = "#000000", bg = "#44475a", bold = true })
-vim.api.nvim_set_hl(0, "iCursor", { fg = "#000000", bg = "#6272a4", bold = true })
-vim.api.nvim_set_hl(0, "vCursor", { fg = "#000000", bg = "#555555", bold = true })
-vim.api.nvim_set_hl(0, "rCursor", { fg = "#000000", bg = "#888888", bold = true })
+-- Cursor colours — bright red block so it always pops
+vim.api.nvim_set_hl(0, "Cursor",  { fg = "#000000", bg = "#ff5555", bold = true }) -- normal: red
+vim.api.nvim_set_hl(0, "iCursor", { fg = "#000000", bg = "#ff79c6", bold = true }) -- insert: pink
+vim.api.nvim_set_hl(0, "vCursor", { fg = "#000000", bg = "#ff5555", bold = true }) -- visual: red
+vim.api.nvim_set_hl(0, "rCursor", { fg = "#000000", bg = "#ff5555", bold = true }) -- replace: red
+
+-- Tell Neovim which highlight group to use per mode
+vim.opt.guicursor = "n-v-c:block-Cursor,i-ci:ver25-iCursor,r-cr:hor20-rCursor,o:hor50-Cursor"
