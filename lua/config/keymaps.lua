@@ -1,13 +1,13 @@
--- ── Telescope overrides ────────────────────────────────────────────────────
+-- ── fzf-lua overrides ─────────────────────────────────────────────────────
 -- Remap <leader>fg to live_grep (LazyVim default maps it to git-files)
-vim.keymap.set("n", "<leader>fg", "<cmd>Telescope live_grep<CR>", { desc = "Live Grep" })
-vim.keymap.set("n", "<leader>fh", "<cmd>Telescope help_tags<CR>", { desc = "Help Tags" })
-vim.keymap.set("n", "<leader>ff", "<cmd>Telescope find_files<CR>", { desc = "Find Files" })
-vim.keymap.set("n", "<leader>fb", "<cmd>Telescope buffers<CR>", { desc = "Buffers" })
+vim.keymap.set("n", "<leader>fg", "<cmd>FzfLua live_grep<CR>",  { desc = "Live Grep" })
+vim.keymap.set("n", "<leader>fh", "<cmd>FzfLua help_tags<CR>",  { desc = "Help Tags" })
+vim.keymap.set("n", "<leader>ff", "<cmd>FzfLua files<CR>",      { desc = "Find Files" })
+vim.keymap.set("n", "<leader>fb", "<cmd>FzfLua buffers<CR>",    { desc = "Buffers" })
 
 -- Live-grep restricted to the current file
 vim.keymap.set("n", "<leader>fgf", function()
-  require("telescope.builtin").live_grep({ search_dirs = { vim.fn.expand("%:p") } })
+  require("fzf-lua").live_grep({ search_dirs = { vim.fn.expand("%:p") } })
 end, { desc = "Live Grep (current file)" })
 
 -- ── File explorer (nvim-tree) ─────────────────────────────────────────────

@@ -1,17 +1,17 @@
 return {
-  -- ── nvim-cmp: override keymaps to match old muscle memory ────────────
+  -- ── blink.cmp: fast Rust-native completion ────────────────────────────
   {
-    "hrsh7th/nvim-cmp",
-    opts = function(_, opts)
-      local cmp = require("cmp")
-      opts.mapping = vim.tbl_extend("force", opts.mapping, {
-        ["<C-k>"] = cmp.mapping.select_prev_item(),
-        ["<C-j>"] = cmp.mapping.select_next_item(),
-        ["<C-e>"] = cmp.mapping.abort(),
-        ["<CR>"]  = cmp.mapping.confirm({ select = true }),
-      })
-      return opts
-    end,
+    "saghen/blink.cmp",
+    opts = {
+      keymap = {
+        preset    = "default",
+        ["<C-k>"] = { "select_prev", "fallback" },
+        ["<C-j>"] = { "select_next", "fallback" },
+        ["<C-e>"] = { "cancel",      "fallback" },
+        ["<CR>"]  = { "accept",      "fallback" },
+      },
+      snippets = { preset = "luasnip" },
+    },
   },
 
   -- ── LuaSnip ───────────────────────────────────────────────────────────

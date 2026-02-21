@@ -38,16 +38,16 @@ require("lazy").setup({
 
     -- ── Editor extras ────────────────────────────────────────────────
     -- lazygit: no dedicated extra; plugin added directly in editor.lua
-    { import = "lazyvim.plugins.extras.editor.telescope" }, -- keep telescope over fzf-lua
+    { import = "lazyvim.plugins.extras.editor.fzf" },
 
     -- ── Coding extras ────────────────────────────────────────────────
-    { import = "lazyvim.plugins.extras.coding.nvim-cmp" }, -- keep nvim-cmp over blink.cmp
+    { import = "lazyvim.plugins.extras.coding.luasnip" }, -- LuaSnip + blink.cmp integration
 
     -- ── DAP extras ───────────────────────────────────────────────────
     { import = "lazyvim.plugins.extras.dap.core" },
 
-    -- ── LSP extras ───────────────────────────────────────────────────
-    { import = "lazyvim.plugins.extras.lsp.none-ls" }, -- keep none-ls for formatting
+    -- ── Test extras ──────────────────────────────────────────────────
+    { import = "lazyvim.plugins.extras.test.core" },
 
     -- ── User plugins ─────────────────────────────────────────────────
     { import = "plugins" },

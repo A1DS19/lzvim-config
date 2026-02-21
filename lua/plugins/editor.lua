@@ -1,10 +1,17 @@
 return {
-  -- ── Disable snacks file explorer (using nvim-tree instead) ────────────
+  -- ── Snacks overrides ──────────────────────────────────────────────────
   {
     "folke/snacks.nvim",
     opts = {
-      explorer = { enabled = false },
+      explorer     = { enabled = false }, -- using nvim-tree instead
+      statuscolumn = { enabled = true  }, -- cleaner folds + git + diagnostics gutter
     },
+  },
+
+  -- ── render-markdown: disable latex (no parser installed) ─────────────
+  {
+    "MeanderingProgrammer/render-markdown.nvim",
+    opts = { latex = { enabled = false } },
   },
 
   -- ── nvim-tree ─────────────────────────────────────────────────────────
@@ -84,75 +91,46 @@ return {
     end,
   },
 
-  -- ── Telescope customisations ──────────────────────────────────────────
+  -- ── fzf-lua customisations ────────────────────────────────────────────
   {
-    "nvim-telescope/telescope.nvim",
-    dependencies = {
-      "nvim-lua/plenary.nvim",
-      "nvim-telescope/telescope-file-browser.nvim",
-      "nvim-telescope/telescope-fzf-native.nvim",
+    "ibhagwan/fzf-lua",
+    opts = {
+      -- Open in horizontal / vertical split with the same keys muscle-memory
+      -- expects from the old Telescope setup.
+      winopts = { preview = { layout = "horizontal" } },
+      keymap  = {
+        builtin = {
+          ["<C-s>"] = "toggle-preview",
+        },
+        fzf = {
+          ["ctrl-s"] = "toggle",
+          ["ctrl-v"] = "vertical",
+        },
+      },
     },
-    opts = function(_, opts)
-      local actions    = require("telescope.actions")
-      local fb_actions = require("telescope").extensions.file_browser.actions
-
-      opts.defaults = vim.tbl_deep_extend("force", opts.defaults or {}, {
-        mappings = {
-          n = {
-            ["s"] = actions.select_horizontal,
-            ["v"] = actions.select_vertical,
-          },
-          i = {
-            ["<C-s>"] = actions.select_horizontal,
-            ["<C-v>"] = actions.select_vertical,
-          },
-        },
-      })
-
-      opts.extensions = vim.tbl_deep_extend("force", opts.extensions or {}, {
-        file_browser = {
-          theme           = "dropdown",
-          hijack_netrw    = false,
-          layout_strategy = "horizontal",
-          layout_config   = { width = 0.8, height = 0.9, prompt_position = "bottom", mirror = false },
-          mappings = {
-            ["n"] = {
-              ["<A-c>"] = fb_actions.create,
-              ["<S-CR>"] = fb_actions.create_from_prompt,
-              ["<A-r>"] = fb_actions.rename,
-              ["<A-m>"] = fb_actions.move,
-              ["<A-y>"] = fb_actions.copy,
-              ["<A-d>"] = fb_actions.remove,
-              ["<C-o>"] = fb_actions.open,
-              ["<C-g>"] = fb_actions.goto_parent_dir,
-              ["<C-e>"] = fb_actions.goto_home_dir,
-              ["<C-w>"] = fb_actions.goto_cwd,
-              ["<C-t>"] = fb_actions.change_cwd,
-              ["<C-f>"] = fb_actions.toggle_browser,
-              ["<C-h>"] = fb_actions.toggle_hidden,
-              ["<C-s>"] = fb_actions.toggle_all,
-              ["<BS>"]  = fb_actions.backspace,
-            },
-          },
-        },
-      })
-
-      return opts
-    end,
-    config = function(_, opts)
-      local telescope = require("telescope")
-      telescope.setup(opts)
-      pcall(telescope.load_extension, "file_browser")
-      pcall(telescope.load_extension, "fzf")
-    end,
   },
 
-  -- Telescope extensions (declared separately so lazy.nvim resolves them)
-  { "nvim-telescope/telescope-file-browser.nvim", lazy = true },
+  -- ── oil.nvim: edit the filesystem like a buffer ───────────────────────
   {
-    "nvim-telescope/telescope-fzf-native.nvim",
-    build = "make",
-    lazy  = true,
+    "stevearc/oil.nvim",
+    dependencies = { "nvim-tree/nvim-web-devicons" },
+    lazy = false,
+    keys = {
+      { "-", "<cmd>Oil<CR>", desc = "Open parent directory (Oil)" },
+    },
+    opts = {
+      delete_to_trash            = true,
+      skip_confirm_for_simple_edits = true,
+      view_options = {
+        show_hidden  = true,
+        natural_sort = true,
+      },
+      float = {
+        padding    = 2,
+        max_width  = 90,
+        max_height = 30,
+      },
+    },
   },
 
   -- ── LazyGit ───────────────────────────────────────────────────────────
