@@ -25,7 +25,7 @@ require("lazy").setup({
     { import = "lazyvim.plugins.extras.lang.clangd" },
     { import = "lazyvim.plugins.extras.lang.typescript" }, -- uses vtsls (faster than tsserver)
     { import = "lazyvim.plugins.extras.lang.python" },
-    { import = "lazyvim.plugins.extras.lang.omnisharp" },
+    { import = "lazyvim.plugins.extras.lang.dotnet" },      -- C# (was omnisharp)
     { import = "lazyvim.plugins.extras.lang.tailwind" },
     { import = "lazyvim.plugins.extras.lang.yaml" },
     { import = "lazyvim.plugins.extras.lang.json" },
@@ -33,11 +33,11 @@ require("lazy").setup({
     { import = "lazyvim.plugins.extras.lang.docker" },
     { import = "lazyvim.plugins.extras.lang.toml" },
     { import = "lazyvim.plugins.extras.lang.cmake" },
-    { import = "lazyvim.plugins.extras.lang.bash" },
-    { import = "lazyvim.plugins.extras.lang.nushell" },
+    -- bash: no dedicated extra; bashls added via lsp.lua servers table
+    -- nushell: handled by nvim-nu plugin in coding.lua
 
     -- ── Editor extras ────────────────────────────────────────────────
-    { import = "lazyvim.plugins.extras.editor.lazygit" },   -- <leader>gg
+    -- lazygit: no dedicated extra; plugin added directly in editor.lua
     { import = "lazyvim.plugins.extras.editor.telescope" }, -- keep telescope over fzf-lua
 
     -- ── Coding extras ────────────────────────────────────────────────

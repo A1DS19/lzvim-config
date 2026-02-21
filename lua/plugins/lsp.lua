@@ -84,6 +84,9 @@ return {
         html  = {},
         cssls = {},
 
+        -- ── Bash (no dedicated LazyVim extra) ─────────────────────────
+        bashls = {},
+
         -- ── Lua (lazydev.nvim is already set up by LazyVim) ───────────
         lua_ls = {
           settings = {

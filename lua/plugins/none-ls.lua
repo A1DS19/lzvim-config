@@ -16,15 +16,6 @@ return {
           },
         }),
 
-        null_ls.builtins.formatting.eslint_d.with({
-          condition = function(utils)
-            return utils.root_has_file({
-              ".eslintrc.js", ".eslintrc.cjs", ".eslintrc.json",
-              "package.json", "turbo.json",
-            })
-          end,
-        }),
-
         null_ls.builtins.formatting.black,
         null_ls.builtins.formatting.isort,
         null_ls.builtins.formatting.rustfmt,
@@ -33,19 +24,9 @@ return {
         null_ls.builtins.formatting.yamlfmt,
         null_ls.builtins.formatting.cmake_format,
 
-        -- ── Code actions ─────────────────────────────────────────────
-
-        null_ls.builtins.code_actions.eslint_d,
-
         -- ── Diagnostics / linters ────────────────────────────────────
-
-        null_ls.builtins.diagnostics.eslint.with({
-          condition = function(utils)
-            return utils.root_has_file({
-              ".eslintrc.js", ".eslintrc.cjs", ".eslintrc.json",
-            })
-          end,
-        }),
+        -- Note: ESLint diagnostics/code-actions are handled by the
+        -- lazyvim.plugins.extras.linting.eslint extra (uses nvim-lint).
 
         null_ls.builtins.diagnostics.yamllint,
         null_ls.builtins.diagnostics.cmake_lint,

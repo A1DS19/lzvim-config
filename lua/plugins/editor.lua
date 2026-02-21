@@ -12,10 +12,11 @@ return {
     "nvim-tree/nvim-tree.lua",
     version = "*",
     dependencies = { "nvim-tree/nvim-web-devicons" },
-    cmd = { "NvimTreeToggle", "NvimTreeFocus" },
+    -- Load eagerly so the VimEnter autocmd can open it immediately
+    lazy = false,
     keys = {
-      { "<C-t>",      "<cmd>NvimTreeToggle<CR>", desc = "Toggle NvimTree" },
-      { "<leader>e",  "<cmd>NvimTreeToggle<CR>", desc = "Toggle NvimTree" },
+      { "<C-t>",     "<cmd>NvimTreeToggle<CR>", desc = "Toggle NvimTree" },
+      { "<leader>e", "<cmd>NvimTreeToggle<CR>", desc = "Toggle NvimTree" },
     },
     opts = {
       disable_netrw = true,
@@ -45,15 +46,42 @@ return {
       on_attach = function(bufnr)
         local api = require("nvim-tree.api")
         api.config.mappings.default_on_attach(bufnr)
-        vim.keymap.set("n", "v", api.node.open.vertical, {
-          desc    = "nvim-tree: Open vertical split",
-          buffer  = bufnr,
-          noremap = true,
-          silent  = true,
-          nowait  = true,
-        })
+
+        local function map(key, action, desc)
+          vim.keymap.set("n", key, action, {
+            desc = "nvim-tree: " .. desc,
+            buffer  = bufnr,
+            noremap = true,
+            silent  = true,
+            nowait  = true,
+          })
+        end
+
+        -- Open in vertical split
+        map("v", api.node.open.vertical, "Open vertical split")
+
+        -- Window navigation: override nvim-tree's <C-k> (file info)
+        -- so all four directions work the same as outside the tree
+        vim.keymap.set("n", "<C-h>", "<C-w>h", { buffer = bufnr, silent = true })
+        vim.keymap.set("n", "<C-j>", "<C-w>j", { buffer = bufnr, silent = true })
+        vim.keymap.set("n", "<C-k>", "<C-w>k", { buffer = bufnr, silent = true })
+        vim.keymap.set("n", "<C-l>", "<C-w>l", { buffer = bufnr, silent = true })
       end,
     },
+    config = function(_, opts)
+      require("nvim-tree").setup(opts)
+
+      -- Auto-open nvim-tree when nvim starts (but not for diffs or stdin)
+      vim.api.nvim_create_autocmd("VimEnter", {
+        callback = function(data)
+          local is_dir  = vim.fn.isdirectory(data.file) == 1
+          local is_file = vim.fn.filereadable(data.file) == 1
+          if not is_dir and not is_file then return end
+          -- Open tree without stealing focus from the file
+          require("nvim-tree.api").tree.toggle({ focus = false, find_file = true })
+        end,
+      })
+    end,
   },
 
   -- ── Telescope customisations ──────────────────────────────────────────
@@ -125,6 +153,16 @@ return {
     "nvim-telescope/telescope-fzf-native.nvim",
     build = "make",
     lazy  = true,
+  },
+
+  -- ── LazyGit ───────────────────────────────────────────────────────────
+  {
+    "kdheepak/lazygit.nvim",
+    dependencies = { "nvim-lua/plenary.nvim" },
+    cmd  = "LazyGit",
+    keys = {
+      { "<leader>gg", "<cmd>LazyGit<CR>", desc = "LazyGit" },
+    },
   },
 
   -- ── CMake tools ───────────────────────────────────────────────────────
