@@ -130,7 +130,7 @@ These are cosmetic — Neorg skips conflicting keys automatically. If you want N
 | C / C++ | `lang.clangd` (custom flags, C++23, inlay hints) |
 | TypeScript / JavaScript | `lang.typescript` (vtsls) |
 | Python | `lang.python` + venv-selector |
-| C# / .NET | `lang.dotnet` (OmniSharp) |
+| C# / .NET | `lang.dotnet` + Roslyn (`roslyn_ls`) |
 | F# | fantomas formatter |
 | Tailwind CSS | `lang.tailwind` |
 | YAML | `lang.yaml` + SchemaStore |

@@ -25,7 +25,7 @@ require("lazy").setup({
     { import = "lazyvim.plugins.extras.lang.clangd" },
     { import = "lazyvim.plugins.extras.lang.typescript" }, -- uses vtsls (faster than tsserver)
     { import = "lazyvim.plugins.extras.lang.python" },
-    { import = "lazyvim.plugins.extras.lang.dotnet" },      -- C# (was omnisharp)
+    { import = "lazyvim.plugins.extras.lang.dotnet" },      -- F#, debugging, tests; C# server is set in lsp.lua
     { import = "lazyvim.plugins.extras.lang.tailwind" },
     { import = "lazyvim.plugins.extras.lang.yaml" },
     { import = "lazyvim.plugins.extras.lang.json" },

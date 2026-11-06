@@ -39,32 +39,15 @@ return {
           },
         },
 
-        -- ── omnisharp ───────────────────────────────────────────────────
-        omnisharp = {
-          init_options = {
-            RoslynExtensionsOptions = {
-              enableImportCompletion   = true,
-              enableRoslynAnalyzers    = true,
-            },
-          },
+        -- ── C#: Roslyn replaces the OmniSharp server from lang.dotnet ───
+        -- lspconfig's roslyn_ls defaults already enable inlay hints and
+        -- completion from unimported namespaces.
+        omnisharp = { enabled = false },
+        roslyn_ls = {
           settings = {
-            FormattingOptions = {
-              EnableEditorConfigSupport = true,
-              OrganizeImports           = true,
+            ["csharp|formatting"] = {
+              dotnet_organize_imports_on_format = true,
             },
-            RoslynExtensionsOptions = {
-              enableImportCompletion   = true,
-              enableRoslynAnalyzers    = true,
-              documentationProvider    = true,
-            },
-            Sdk = { IncludePrereleases = true },
-            enableEditorConfigSupport         = true,
-            enableRoslynAnalyzers             = true,
-            organizeImportsOnFormat           = true,
-            enableImportCompletion            = true,
-            includeInlayParameterNameHints    = "all",
-            includeInlayPropertyDeclarationTypeHints = true,
-            includeInlayVariableTypeHints     = true,
           },
         },
 
