@@ -27,7 +27,8 @@ Optional — only needed for specific language servers / formatters:
 | `python`, `pip` | Python |
 | `cargo`, `rustup` | Rust |
 | `cmake`, `cmake-format`, `cmake-lint` | CMake |
-| `prettier` | JS/TS/JSON/HTML/CSS/YAML/Markdown |
+| `biome` | JS/TS/JSON/CSS in projects with a `biome.json` (Mason installs it) |
+| `prettier` | HTML/YAML/Markdown, and JS/TS/JSON/CSS in projects without Biome |
 | `black`, `isort` | Python formatting |
 | `stylua` | Lua formatting |
 | `shfmt` | Shell formatting |

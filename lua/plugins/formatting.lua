@@ -1,3 +1,7 @@
+-- biome-check only counts as available inside a project with a Biome config, so
+-- every other project falls through to Prettier.
+local biome_or_prettier = { "biome-check", "prettier", stop_after_first = true }
+
 return {
   -- ── conform.nvim: async formatting ───────────────────────────────────────
   -- Replaces none-ls for formatting. Install missing tools via Mason or system
@@ -7,14 +11,14 @@ return {
     opts = {
       formatters_by_ft = {
         -- ── Web ──────────────────────────────────────────────────────
-        javascript      = { "prettier" },
-        typescript      = { "prettier" },
-        javascriptreact = { "prettier" },
-        typescriptreact = { "prettier" },
-        json            = { "prettier" },
+        javascript      = biome_or_prettier,
+        typescript      = biome_or_prettier,
+        javascriptreact = biome_or_prettier,
+        typescriptreact = biome_or_prettier,
+        json            = biome_or_prettier,
+        css             = biome_or_prettier,
+        scss            = biome_or_prettier,
         html            = { "prettier" },
-        css             = { "prettier" },
-        scss            = { "prettier" },
         yaml            = { "prettier" },
         markdown        = { "prettier" },
 

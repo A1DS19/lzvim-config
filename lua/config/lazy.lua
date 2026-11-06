@@ -24,6 +24,7 @@ require("lazy").setup({
     { import = "lazyvim.plugins.extras.lang.rust" },
     { import = "lazyvim.plugins.extras.lang.clangd" },
     { import = "lazyvim.plugins.extras.lang.typescript" }, -- server is set by lazyvim_ts_lsp in options.lua
+    { import = "lazyvim.plugins.extras.lang.typescript.biome" },
     { import = "lazyvim.plugins.extras.lang.python" },
     { import = "lazyvim.plugins.extras.lang.dotnet" },      -- F#, debugging, tests; C# server is set in lsp.lua
     { import = "lazyvim.plugins.extras.lang.tailwind" },
