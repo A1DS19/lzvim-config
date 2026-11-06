@@ -28,6 +28,7 @@ return {
     },
     opts = {
       disable_netrw = true,
+      tab = { sync = { open = true } },
       hijack_netrw  = true,
       update_cwd    = false,
       update_focused_file = { enable = false, update_cwd = false },
@@ -79,15 +80,24 @@ return {
     config = function(_, opts)
       require("nvim-tree").setup(opts)
 
-      -- Auto-open nvim-tree when nvim starts (but not for diffs or stdin)
+      -- toggle alone would close a tree nvim-tree already opened for a directory
+      local function show_tree()
+        local tree = require("nvim-tree.api").tree
+        if not vim.o.diff and not tree.is_visible() then
+          tree.toggle({ focus = false, find_file = true })
+        end
+      end
+
       vim.api.nvim_create_autocmd("VimEnter", {
-        callback = function(data)
-          local is_dir  = vim.fn.isdirectory(data.file) == 1
-          local is_file = vim.fn.filereadable(data.file) == 1
-          if not is_dir and not is_file then return end
-          -- Open tree without stealing focus from the file
-          require("nvim-tree.api").tree.toggle({ focus = false, find_file = true })
+        callback = function()
+          if vim.fn.argc() > 0 then show_tree() end
         end,
+      })
+      vim.api.nvim_create_autocmd("User", {
+        -- The dashboard won't draw beside another window, so a bare start waits for it.
+        -- Restoring a session closes every window, the tree included.
+        pattern = { "SnacksDashboardOpened", "PersistenceLoadPost" },
+        callback = show_tree,
       })
     end,
   },
