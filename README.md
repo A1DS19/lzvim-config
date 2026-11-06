@@ -27,7 +27,8 @@ Optional — only needed for specific language servers / formatters:
 | `python`, `pip` | Python |
 | `cargo`, `rustup` | Rust |
 | `cmake`, `cmake-format`, `cmake-lint` | CMake |
-| `prettier` | JS/TS/JSON/HTML/CSS/YAML/Markdown |
+| `biome` | JS/TS/JSON/CSS in projects with a `biome.json` (Mason installs it) |
+| `prettier` | HTML/YAML/Markdown, and JS/TS/JSON/CSS in projects without Biome |
 | `black`, `isort` | Python formatting |
 | `stylua` | Lua formatting |
 | `shfmt` | Shell formatting |
@@ -100,13 +101,15 @@ or with Cargo:
 cargo install tree-sitter-cli --version 0.26.1
 ```
 
-### luarocks (lazy.nvim warning)
+### luarocks (needed by Neorg)
 
-No plugins in this config require luarocks. The warning is safe to ignore. If you want to silence it, add to `lazy.lua`:
+Neorg's parsers are installed through luarocks, which lazy.nvim builds for itself with hererocks. Without the readline headers that build fails, and every startup then reports `Too many rounds of missing plugins`. Either install the headers (`sudo dnf install readline-devel`) and run `:Lazy build hererocks`, or build it without readline:
 
-```lua
-rocks = { enabled = false },
+```sh
+python3 ~/.local/share/nvim/lazy/hererocks/hererocks.py -l 5.1 -r latest --no-readline ~/.local/share/nvim/lazy-rocks/hererocks
 ```
+
+Then run `:Lazy build tree-sitter-norg tree-sitter-norg-meta neorg`.
 
 ### Neorg keybind conflicts
 
@@ -126,9 +129,9 @@ These are cosmetic — Neorg skips conflicting keys automatically. If you want N
 |---|---|
 | Rust | `lang.rust` + rustaceanvim |
 | C / C++ | `lang.clangd` (custom flags, C++23, inlay hints) |
-| TypeScript / JavaScript | `lang.typescript` (vtsls) |
+| TypeScript / JavaScript | `lang.typescript` (TypeScript 7 native `tsc`) |
 | Python | `lang.python` + venv-selector |
-| C# / .NET | `lang.dotnet` (OmniSharp) |
+| C# / .NET | `lang.dotnet` + Roslyn (`roslyn_ls`) |
 | F# | fantomas formatter |
 | Tailwind CSS | `lang.tailwind` |
 | YAML | `lang.yaml` + SchemaStore |
@@ -159,7 +162,7 @@ These are cosmetic — Neorg skips conflicting keys automatically. If you want N
 | **LazyGit** | Git TUI inside Neovim |
 | **neotest** | Inline test runner (Rust / Python / .NET / Jest) |
 | **cmake-tools** | Build / run CMake projects |
-| **nvim-autopairs** | Auto-close brackets / quotes |
+| **mini.pairs** | Auto-close brackets / quotes |
 | **nvim-ts-autotag** | Auto-close HTML / JSX tags |
 | **DAP** | Debug adapter protocol (codelldb / debugpy / netcoredbg / js-debug) |
 | **Neorg** | Org-mode for Neovim (loads on `.norg` files) |
