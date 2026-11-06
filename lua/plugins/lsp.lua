@@ -18,6 +18,8 @@ return {
             "--compile-commands-dir=build",
             "--pch-storage=memory",
             "--offset-encoding=utf-16",
+            -- clangd's routine logging goes to stderr, which Neovim appends to lsp.log
+            "--log=error",
           },
           init_options = {
             usePlaceholders    = true,
@@ -37,14 +39,8 @@ return {
           },
         },
 
-        -- ── omnisharp (override path to mason-managed binary) ──────────
+        -- ── omnisharp ───────────────────────────────────────────────────
         omnisharp = {
-          cmd = {
-            vim.fn.stdpath("data") .. "/mason/packages/omnisharp/libexec/OmniSharp",
-            "--languageserver",
-            "--hostPID",
-            tostring(vim.fn.getpid()),
-          },
           init_options = {
             RoslynExtensionsOptions = {
               enableImportCompletion   = true,
@@ -95,24 +91,9 @@ return {
             },
           },
         },
-
-        -- ── schemastore for JSON/YAML (both extras pull it in) ────────
-        jsonls = {
-          settings = {
-            json = { schemas = require("schemastore").json.schemas() },
-          },
-        },
-        yamlls = {
-          settings = {
-            yaml = { schemas = require("schemastore").yaml.schemas() },
-          },
-        },
       },
     },
   },
-
-  -- schemastore is a dependency for jsonls / yamlls overrides above
-  { "b0o/schemastore.nvim", lazy = true },
 
   -- ── Arduino language server (no official extra) ───────────────────────
   {

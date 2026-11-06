@@ -32,13 +32,6 @@ return {
     end,
   },
 
-  -- ── Autopairs ─────────────────────────────────────────────────────────
-  {
-    "windwp/nvim-autopairs",
-    event = "InsertEnter",
-    opts  = {},
-  },
-
   -- ── Auto-close HTML/JSX tags ──────────────────────────────────────────
   -- (already included in LazyVim defaults; kept here for explicitness)
   {

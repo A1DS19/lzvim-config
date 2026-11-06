@@ -1,6 +1,7 @@
 return {
   -- ── neotest: run tests inline from Neovim ────────────────────────────────
-  -- Adapters cover the languages configured in this setup.
+  -- The Python, Rust and .NET adapters come from their lang extras; only Jest
+  -- needs wiring here.
   -- Default keymaps (from lazyvim.plugins.extras.test.core):
   --   <leader>tt  → run nearest test
   --   <leader>tT  → run all tests in file
@@ -11,20 +12,11 @@ return {
   --   <leader>tS  → stop test run
   {
     "nvim-neotest/neotest",
-    dependencies = {
-      "nvim-neotest/neotest-python",   -- Python (pytest / unittest)
-      "rouge8/neotest-rust",           -- Rust (cargo test)
-      "Issafalcon/neotest-dotnet",     -- C# / F# (dotnet test)
-      "nvim-neotest/neotest-jest",     -- JS/TS (jest)
+    dependencies = { "nvim-neotest/neotest-jest" },
+    opts = {
+      adapters = {
+        ["neotest-jest"] = { jestCommand = "npx jest --passWithNoTests" },
+      },
     },
-    opts = function(_, opts)
-      opts.adapters = opts.adapters or {}
-      vim.list_extend(opts.adapters, {
-        require("neotest-python"),
-        require("neotest-rust"),
-        require("neotest-dotnet"),
-        require("neotest-jest")({ jestCommand = "npx jest --passWithNoTests" }),
-      })
-    end,
   },
 }
