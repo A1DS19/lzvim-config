@@ -128,7 +128,7 @@ These are cosmetic — Neorg skips conflicting keys automatically. If you want N
 |---|---|
 | Rust | `lang.rust` + rustaceanvim |
 | C / C++ | `lang.clangd` (custom flags, C++23, inlay hints) |
-| TypeScript / JavaScript | `lang.typescript` (vtsls) |
+| TypeScript / JavaScript | `lang.typescript` (TypeScript 7 native `tsc`) |
 | Python | `lang.python` + venv-selector |
 | C# / .NET | `lang.dotnet` + Roslyn (`roslyn_ls`) |
 | F# | fantomas formatter |

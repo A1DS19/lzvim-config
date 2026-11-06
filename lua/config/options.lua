@@ -6,6 +6,10 @@ vim.opt.wrap = true
 vim.opt.cmdheight = 2
 vim.opt.guifont = "JetBrainsMono Nerd Font:h17"
 
+-- TypeScript 7's native server instead of vtsls. Mason supplies the binary, so
+-- it also works in projects pinned to an older TypeScript.
+vim.g.lazyvim_ts_lsp = "tsc"
+
 -- Cursor colours — bright red block so it always pops
 vim.api.nvim_set_hl(0, "Cursor",  { fg = "#000000", bg = "#ff5555", bold = true }) -- normal: red
 vim.api.nvim_set_hl(0, "iCursor", { fg = "#000000", bg = "#ff79c6", bold = true }) -- insert: pink
