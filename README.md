@@ -36,6 +36,7 @@ Optional — only needed for specific language servers / formatters:
 | `hadolint` | Dockerfile linting |
 | `arduino-cli` | Arduino language server |
 | `asm-lsp` | Assembly (AVR / x86 / ARM) |
+| `arm-none-eabi-gcc` | ARM assembly error checking |
 
 Install most of these directly from Neovim with `:MasonInstall <tool>`.
 
@@ -144,7 +145,7 @@ These are cosmetic — Neorg skips conflicting keys automatically. If you want N
 | Bash | `bashls` + shfmt |
 | Lua | `lua_ls` + stylua |
 | GLSL | `glsl_analyzer` + clang-format |
-| Assembly | `asm_lsp` (AVR / x86 / ARM) |
+| Assembly | `asm_lsp` (x86-64 by default; other targets need a project config, see [ARM assembly](#arm-assembly)) |
 | Arduino | `arduino-language-server` |
 | Nushell | `nvim-nu` (syntax + indent) |
 
@@ -213,6 +214,29 @@ These are cosmetic — Neorg skips conflicting keys automatically. If you want N
 | `v` (in nvim-tree) | Open file in vertical split |
 
 All other key bindings follow the [LazyVim defaults](https://www.lazyvim.org/keymaps).
+
+---
+
+## ARM assembly
+
+`asm-lsp` assumes x86-64 unless the project says otherwise, so add a `.asm-lsp.toml` at the project root. For a Cortex-M4F:
+
+```toml
+[default_config]
+version = "0.10.1"
+assembler = "gas"
+instruction_set = "arm"
+
+[default_config.opts]
+compiler = "arm-none-eabi-gcc"
+compile_flags_txt = ["-x", "assembler-with-cpp", "-mcpu=cortex-m4", "-mfpu=fpv4-sp-d16", "-mfloat-abi=hard", "-mthumb", "-c", "-o", "/dev/null"]
+diagnostics = true
+default_diagnostics = false
+```
+
+- **Errors** come from `arm-none-eabi-gcc`, which must be on `PATH`. Match the flags to your build.
+- **Highlighting:** files with `.thumb`, `.syntax unified`, `.cpu cortex-*` or `.arch armv*` get ARM comment rules, so `#45` isn't shown as a comment. Run `:e` on a new file after typing its directives.
+- **Docs:** asm-lsp's hover, completion and signature help are off in these projects, because its `arm` docs cover AArch64 rather than Cortex-M. `K` reports that hover isn't supported. Go-to-definition, references and symbols still work.
 
 ---
 

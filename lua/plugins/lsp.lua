@@ -1,3 +1,22 @@
+-- asm-lsp's `arm` instruction set documents AArch64, which contradicts Cortex-M code.
+-- Keep its compiler diagnostics and label navigation, and drop the docs.
+local function drop_aarch64_docs(client)
+  if not client.root_dir then return end
+
+  local config = vim.fs.joinpath(client.root_dir, ".asm-lsp.toml")
+  if vim.fn.filereadable(config) == 0 then return end
+
+  local declares_arm = vim.iter(vim.fn.readfile(config)):any(function(line)
+    return line:find('^%s*instruction_set%s*=%s*"arm"') ~= nil
+  end)
+  if not declares_arm then return end
+
+  local capabilities = client.server_capabilities
+  capabilities.hoverProvider = nil
+  capabilities.completionProvider = nil
+  capabilities.signatureHelpProvider = nil
+end
+
 return {
   -- ── LSP server overrides & custom servers ─────────────────────────────
   {
@@ -57,6 +76,7 @@ return {
         -- ── Assembly LSP (AVR / x86 / ARM) ────────────────────────────
         asm_lsp = {
           filetypes = { "asm", "vmasm" },
+          on_init = drop_aarch64_docs,
         },
 
         -- ── HTML / CSS (covered by tailwind extra, kept explicit) ──────
