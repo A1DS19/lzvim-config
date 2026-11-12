@@ -157,7 +157,7 @@ These are cosmetic — Neorg skips conflicting keys automatically. If you want N
 | **nvim-lint** | Async linter (replaces none-ls diagnostics) |
 | **LuaSnip** | Snippet engine + friendly-snippets + user snippets |
 | **nvim-tree** | Sidebar file explorer (auto-opens on launch) |
-| **oil.nvim** | Edit the filesystem like a buffer |
+| **oil.nvim** | Edit the filesystem like a buffer (opens on `-`; `nvim <dir>` opens in nvim-tree) |
 | **fzf-lua** | Fuzzy finder (faster than Telescope) |
 | **LazyGit** | Git TUI inside Neovim |
 | **neotest** | Inline test runner (Rust / Python / .NET / Jest) |

@@ -30,6 +30,8 @@ return {
       disable_netrw = true,
       tab = { sync = { open = true } },
       hijack_netrw  = true,
+      -- left on, `nvim <dir>` puts the tree in the main window instead of the side
+      hijack_directories = { enable = false },
       update_cwd    = false,
       update_focused_file = { enable = false, update_cwd = false },
       view = {
@@ -90,7 +92,17 @@ return {
 
       vim.api.nvim_create_autocmd("VimEnter", {
         callback = function()
-          if vim.fn.argc() > 0 then show_tree() end
+          if vim.fn.argc() == 0 then return end
+          -- `nvim <dir>`: swap the directory buffer for an empty one, so the
+          -- tree on the left is the only explorer
+          local dir = vim.fn.argv(0)
+          if vim.fn.argc() == 1 and vim.fn.isdirectory(dir) == 1 then
+            local dir_buf = vim.api.nvim_get_current_buf()
+            vim.cmd.cd(dir)
+            vim.cmd.enew()
+            vim.api.nvim_buf_delete(dir_buf, { force = true })
+          end
+          show_tree()
         end,
       })
       vim.api.nvim_create_autocmd("User", {
@@ -130,6 +142,8 @@ return {
       { "-", "<cmd>Oil<CR>", desc = "Open parent directory (Oil)" },
     },
     opts = {
+      -- nvim-tree shows directories; oil opens only on `-`
+      default_file_explorer      = false,
       delete_to_trash            = true,
       skip_confirm_for_simple_edits = true,
       view_options = {
